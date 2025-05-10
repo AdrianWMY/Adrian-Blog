@@ -1,42 +1,41 @@
+import ArticleCard from '@/components/ArticleCard';
 import Image from 'next/image';
 
 export default function Home() {
   return (
-    <>
-      <h1>Hello World</h1>
-      <button className="btn bg-sky-600">Sign Up</button>
-      <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl">
-        Responsive
-      </button>
-      <div className="collapse bg-base-100 border border-base-300">
-        <input type="radio" name="my-accordion-1" defaultChecked />
-        <div className="collapse-title font-semibold">
-          How do I create an account?
+    <div className="px-5">
+      <section className="mt-2 lg:mt-10  lg:w-1/2">
+        <h1 className="text-4xl font-bold ">
+          Documenting My Journey as a Web Developer
+        </h1>
+        <br />
+        <p className="text-lg">
+          Follow along as I share my experiences, learnings, and insights from
+          the world of web development.
+        </p>
+        <br />
+        <button className="btn btn-neutral">Explore All Posts</button>
+      </section>
+
+      <section className="mt-30">
+        <h1 className="text-2xl ">Latest Articles</h1>
+        <div className="mt-10 grid grid-cols-3 ">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <ArticleCard key={index} />
+          ))}
         </div>
-        <div className="collapse-content text-sm">
-          Click the "Sign Up" button in the top right corner and follow the
-          registration process.
-        </div>
-      </div>
-      <div className="collapse bg-base-100 border border-base-300">
-        <input type="radio" name="my-accordion-1" />
-        <div className="collapse-title font-semibold">
-          I forgot my password. What should I do?
-        </div>
-        <div className="collapse-content text-sm">
-          Click on "Forgot Password" on the login page and follow the
-          instructions sent to your email.
-        </div>
-      </div>
-      <div className="collapse bg-base-100 border border-base-300">
-        <input type="radio" name="my-accordion-1" />
-        <div className="collapse-title font-semibold">
-          How do I update my profile information?
-        </div>
-        <div className="collapse-content text-sm">
-          Go to "My Account" settings and select "Edit Profile" to make changes.
-        </div>
-      </div>
-    </>
+      </section>
+
+      <section className="bg-zinc-200 mt-10 py-20 text-center w-screen relative left-1/2 -translate-x-1/2">
+        <h1 className="text-3xl font-bold">Stay Updated</h1>
+        <br />
+        <p>
+          Subscribe to my newsletter to receive the latest articles, tutorials,
+          and insights about web development.
+        </p>
+        <br />
+        <button className="btn btn-neutral">Subscribe</button>
+      </section>
+    </div>
   );
 }

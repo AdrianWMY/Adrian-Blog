@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { AR_One_Sans } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const arOneSans = AR_One_Sans({
   variable: '--font-ar-one-sans',
@@ -32,9 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${arOneSans.className}`}>
-        <main className="container mx-auto flex flex-col items-center">
+        <main className="overflow-x-hidden">
           <Header />
-          {children}
+          <div className="container mx-auto">{children}</div>
+          <Footer />
         </main>
       </body>
     </html>
