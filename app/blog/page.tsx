@@ -2,116 +2,40 @@
 import BlogPostCard from '@/components/BlogPostCard';
 import Categories from '@/components/Categories';
 import Pagination from '@/components/Pagination';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-// Sample blog post data
-const blogPosts = [
-  {
-    id: 1,
-    slug: 'getting-started-with-react-hooks',
-    title: 'Getting Started with React Hooks',
-    tags: ['React', 'JavaScript', 'Web Development'],
-    description:
-      'A comprehensive guide to understanding and implementing React Hooks in your projects. Learn about useState, useEffect, useContext, and more.',
-    author: 'Adrian',
-    date: 'May 9, 2025',
-  },
-  {
-    id: 2,
-    slug: 'typescript-best-practices',
-    title: 'TypeScript Best Practices',
-    tags: ['TypeScript', 'JavaScript', 'Programming'],
-    description:
-      'Learn the best practices for using TypeScript in your projects. From type definitions to advanced features, this guide covers it all.',
-    author: 'Adrian',
-    date: 'May 8, 2025',
-  },
-  {
-    id: 3,
-    slug: 'building-rest-apis-with-nodejs',
-    title: 'Building REST APIs with Node.js',
-    tags: ['Node.js', 'API', 'Backend'],
-    description:
-      'A step-by-step guide to creating robust REST APIs using Node.js and Express. Includes authentication, validation, and error handling.',
-    author: 'Adrian',
-    date: 'May 7, 2025',
-  },
-  {
-    id: 4,
-    slug: 'css-grid-layout-mastery',
-    title: 'CSS Grid Layout Mastery',
-    tags: ['CSS', 'Web Design', 'Frontend'],
-    description:
-      'Master the CSS Grid Layout system with practical examples and real-world use cases. Transform your web layouts with modern CSS.',
-    author: 'Adrian',
-    date: 'May 6, 2025',
-  },
-  {
-    id: 5,
-    slug: 'docker-for-developers',
-    title: 'Docker for Developers',
-    tags: ['Docker', 'DevOps', 'Containerization'],
-    description:
-      'Learn how to containerize your applications with Docker. From basic concepts to advanced deployment strategies.',
-    author: 'Adrian',
-    date: 'May 5, 2025',
-  },
-  {
-    id: 6,
-    slug: 'graphql-vs-rest',
-    title: 'GraphQL vs REST',
-    tags: ['GraphQL', 'API', 'Web Development'],
-    description:
-      'A detailed comparison between GraphQL and REST APIs. Understand when to use each and their respective advantages.',
-    author: 'Adrian',
-    date: 'May 4, 2025',
-  },
-  {
-    id: 7,
-    slug: 'nextjs-14-features',
-    title: 'Next.js 14 Features',
-    tags: ['Next.js', 'React', 'Web Development'],
-    description:
-      "Explore the latest features in Next.js 14. From server components to improved routing, discover what's new.",
-    author: 'Adrian',
-    date: 'May 3, 2025',
-  },
-  {
-    id: 8,
-    slug: 'testing-react-applications',
-    title: 'Testing React Applications',
-    tags: ['React', 'Testing', 'Jest'],
-    description:
-      'Learn how to write effective tests for your React applications using Jest and React Testing Library.',
-    author: 'Adrian',
-    date: 'May 2, 2025',
-  },
-  {
-    id: 9,
-    slug: 'state-management-with-redux',
-    title: 'State Management with Redux',
-    tags: ['Redux', 'React', 'State Management'],
-    description:
-      'Master state management in React applications using Redux. Learn about actions, reducers, and the Redux store.',
-    author: 'Adrian',
-    date: 'May 1, 2025',
-  },
-  {
-    id: 10,
-    slug: 'web-performance-optimization',
-    title: 'Web Performance Optimization',
-    tags: ['Performance', 'Web Development', 'Optimization'],
-    description:
-      'Learn techniques to optimize your web applications for better performance and user experience.',
-    author: 'Adrian',
-    date: 'April 30, 2025',
-  },
-];
+interface BlogPost {
+  slug: string;
+  title: string;
+  tags: string[];
+  description: string;
+  author: string;
+  date: string;
+  thumbnail?: string;
+}
 
 const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/blog-posts');
+        const posts = await response.json();
+        setBlogPosts(posts);
+      } catch (error) {
+        console.error('Error fetching blog posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   // Filter posts based on selected tag
   const filteredPosts = selectedTag
@@ -129,6 +53,21 @@ const Page = () => {
     setCurrentPage(1); // Reset to first page when changing tags
   };
 
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
+          <div className="space-y-4">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-32 bg-gray-200 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="md:px-10 flex mt-10 gap-10">
       <div className="w-1/4 hidden sm:block">
@@ -143,7 +82,7 @@ const Page = () => {
         )}
         <div className="mt-10">
           {currentPosts.map((post) => (
-            <div key={post.id} className="mb-5">
+            <div key={post.slug} className="mb-5">
               <BlogPostCard
                 slug={post.slug}
                 title={post.title}
@@ -151,6 +90,7 @@ const Page = () => {
                 description={post.description}
                 author={post.author}
                 date={post.date}
+                thumbnail={post.thumbnail}
               />
             </div>
           ))}

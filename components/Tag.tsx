@@ -1,18 +1,13 @@
 import React from 'react';
 
 interface Props {
-  children: React.ReactNode;
-  onClick?: () => void;
+  name: string;
 }
 
-const Tag = ({ children, onClick }: Props) => {
-  //   return <button className="btn btn-soft btn-secondary">{children}</button>;
+const Tag = ({ name }: Props) => {
   return (
-    <span
-      onClick={onClick}
-      className="text-pink-500 hover:text-pink-600 font-bold px-1 cursor-pointer"
-    >
-      {children}
+    <span className="bg-pink-100 text-pink-800 text-xs font-medium px-2.5 py-0.5 rounded">
+      {name}
     </span>
   );
 };

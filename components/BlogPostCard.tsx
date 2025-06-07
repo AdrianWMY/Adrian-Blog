@@ -9,6 +9,7 @@ interface BlogPostCardProps {
   description: string;
   author: string;
   date: string;
+  thumbnail?: string;
 }
 
 const BlogPostCard = ({
@@ -18,25 +19,30 @@ const BlogPostCard = ({
   description,
   author,
   date,
+  thumbnail,
 }: BlogPostCardProps) => {
   return (
     <Link href={`/blog/${slug}`}>
-      <div className="border border-solid rounded-md border-zinc-300 p-5 cursor-pointer hover:border-pink-500 transition-colors">
-        <div className="title text-2xl py-1 font-semibold">{title}</div>
-        <div>
-          {tags.map((tag, index) => (
-            <span key={index} className="mx-1">
-              <Tag>{tag}</Tag>
-            </span>
+      <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+        {/* {thumbnail && (
+          <div className="mb-4">
+            <img
+              src={thumbnail}
+              alt={title}
+              className="w-full h-48 object-cover rounded-lg"
+            />
+          </div>
+        )} */}
+        <h2 className="text-xl font-semibold mb-2">{title}</h2>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {tags.map((tag) => (
+            <Tag key={tag} name={tag} />
           ))}
         </div>
-        <p className="short-description text-stone-500 py-1">{description}</p>
-        <div className="flex justify-between text-stone-700 py-1">
-          <div>
-            <div className="author-icon"></div>
-            <div className="author">{author}</div>
-          </div>
-          <div className="date-time">{date}</div>
+        <p className="text-gray-600 mb-4">{description}</p>
+        <div className="flex justify-between items-center text-sm text-gray-500">
+          <span>{author}</span>
+          <span>{date}</span>
         </div>
       </div>
     </Link>
