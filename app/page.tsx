@@ -4,8 +4,8 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <div className="px-5">
-      <section className="mt-2 lg:mt-10  lg:w-1/2">
-        <h1 className="text-4xl font-bold ">
+      <section className="mt-10 text-center lg:text-start lg:w-1/2">
+        <h1 className="text-3xl lg:text-4xl font-bold ">
           Documenting My Journey as a Web Developer
         </h1>
         <br />
@@ -17,9 +17,9 @@ export default function Home() {
         <button className="btn btn-neutral">Explore All Posts</button>
       </section>
 
-      <section className="mt-30">
+      <section className="mt-20">
         <h1 className="text-2xl ">Latest Articles</h1>
-        <div className="mt-10 grid grid-cols-3 ">
+        <div className="mt-10 flex justify-center lg:justify-between flex-wrap lg:gap-0 gap-5 ">
           {Array.from({ length: 3 }).map((_, index) => (
             <ArticleCard key={index} />
           ))}

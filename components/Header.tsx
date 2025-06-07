@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Link from 'next/link';
 const Header = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -10,10 +10,10 @@ const Header = () => {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Home</a>
+              <Link href={'/'}>Home</Link>
             </li>
             <li>
-              <a>Blog</a>
+              <Link href={'blog'}>Blog</Link>
             </li>
             <li>
               <a href="">About</a>

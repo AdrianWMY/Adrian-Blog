@@ -2,7 +2,7 @@ import React from 'react';
 
 const ArticleCard = () => {
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
+    <div className="card bg-base-100 w-80 xl:w-96 shadow-sm">
       <figure className="p-5">
         <img src="https://placehold.co/600x350" alt="" className="rounded-md" />
       </figure>

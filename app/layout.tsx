@@ -32,12 +32,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${arOneSans.className}`}>
-        <main className="overflow-x-hidden">
+      <body className={`${arOneSans.className} flex flex-col min-h-screen`}>
+        <main className="flex-grow overflow-x-hidden">
           <Header />
-          <div className="container mx-auto">{children}</div>
-          <Footer />
+          <div className="container mx-auto my-auto p-2">{children}</div>
         </main>
+        <Footer />
       </body>
     </html>
   );
