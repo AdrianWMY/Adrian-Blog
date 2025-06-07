@@ -1,94 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface CategoriesProps {
   onTagSelect: (tag: string | null) => void;
   selectedTag: string | null;
 }
 
+interface BlogPost {
+  tags: string[];
+}
+
 const Categories: React.FC<CategoriesProps> = ({
   onTagSelect,
   selectedTag,
 }) => {
-  // Get unique tags from all blog posts
-  const allTags = [
-    'React',
-    'JavaScript',
-    'Web Development',
-    'TypeScript',
-    'Programming',
-    'Node.js',
-    'API',
-    'Backend',
-    'CSS',
-    'Web Design',
-    'Frontend',
-    'Docker',
-    'DevOps',
-    'Containerization',
-    'GraphQL',
-    'Next.js',
-    'Testing',
-    'Jest',
-    'Redux',
-    'State Management',
-    'Performance',
-    'Optimization',
-  ];
+  const [tagCounts, setTagCounts] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
 
-  // Sample blog posts data to count tags
-  const blogPosts = [
-    {
-      id: 1,
-      tags: ['React', 'JavaScript', 'Web Development'],
-    },
-    {
-      id: 2,
-      tags: ['TypeScript', 'JavaScript', 'Programming'],
-    },
-    {
-      id: 3,
-      tags: ['Node.js', 'API', 'Backend'],
-    },
-    {
-      id: 4,
-      tags: ['CSS', 'Web Design', 'Frontend'],
-    },
-    {
-      id: 5,
-      tags: ['Docker', 'DevOps', 'Containerization'],
-    },
-    {
-      id: 6,
-      tags: ['GraphQL', 'API', 'Web Development'],
-    },
-    {
-      id: 7,
-      tags: ['Next.js', 'React', 'Web Development'],
-    },
-    {
-      id: 8,
-      tags: ['React', 'Testing', 'Jest'],
-    },
-    {
-      id: 9,
-      tags: ['Redux', 'React', 'State Management'],
-    },
-    {
-      id: 10,
-      tags: ['Performance', 'Web Development', 'Optimization'],
-    },
-  ];
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/blog-posts');
+        const posts: BlogPost[] = await response.json();
 
-  // Count actual occurrences of each tag in blog posts
-  const tagCounts = allTags.reduce((acc, tag) => {
-    acc[tag] = blogPosts.filter((post) => post.tags.includes(tag)).length;
-    return acc;
-  }, {} as Record<string, number>);
+        // Get all unique tags from posts
+        const allTags = Array.from(new Set(posts.flatMap((post) => post.tags)));
+
+        // Count occurrences of each tag
+        const counts = allTags.reduce((acc, tag) => {
+          acc[tag] = posts.filter((post) => post.tags.includes(tag)).length;
+          return acc;
+        }, {} as Record<string, number>);
+
+        setTagCounts(counts);
+      } catch (error) {
+        console.error('Error fetching tags:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <h2 className="text-xl font-semibold">Tags</h2>
+        <div className="animate-pulse px-5 pt-5">
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
       <h2 className="text-xl font-semibold">Tags</h2>
-      <ul className="px-5 pt-5 ">
+      <ul className="px-5 pt-5">
         <li
           className={`hover:text-pink-600 cursor-pointer py-2 ${
             !selectedTag ? 'text-pink-600' : ''
