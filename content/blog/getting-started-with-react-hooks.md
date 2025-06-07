@@ -1,12 +1,15 @@
 ---
-title: 'Getting Started with React Hooks'
-description: 'A comprehensive guide to understanding and implementing React Hooks in your projects. Learn about useState, useEffect, useContext, and more.'
-date: '2024-03-20'
-author: 'Adrian'
-tags: ['React', 'JavaScript', 'Web Development']
-thumbnail: '/images/blog/react-hooks.jpg'
+title: Getting Started with React Hooks
+date: 2024-03-20
+author: Adrian
+tags:
+  - React
+  - JavaScript
+  - Web Development
+description: A comprehensive guide to understanding and implementing React Hooks
+  in your projects. Learn about useState, useEffect, useContext, and more.
+thumbnail: /images/blog/react-hooks.jpg
 ---
-
 # Getting Started with React Hooks
 
 React Hooks have revolutionized the way we write React components. They allow us to use state and other React features without writing class components. In this guide, we'll explore the most commonly used hooks and how to implement them in your projects.
@@ -90,4 +93,4 @@ function ThemedButton() {
 
 React Hooks provide a more direct API to the React concepts you already know: props, state, context, refs, and lifecycle. They also offer a powerful new way to combine them.
 
-Remember that hooks are a new feature in React, and the React team is still working on improving them. Keep an eye on the official React documentation for updates and best practices. 
+Remember that hooks are a new feature in React, and the React team is still working on improving them. Keep an eye on the official React documentation for updates and best practices.
