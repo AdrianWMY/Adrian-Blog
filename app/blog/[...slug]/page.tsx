@@ -16,6 +16,15 @@ interface BlogPost {
   content: string;
 }
 
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
 const BlogPost = () => {
   const params = useParams();
   const [post, setPost] = useState<BlogPost | null>(null);
@@ -85,7 +94,7 @@ const BlogPost = () => {
       <div className="flex items-center gap-4 mb-8">
         <span className="text-gray-600">{post.author}</span>
         <span className="text-gray-600">•</span>
-        <span className="text-gray-600">{post.date}</span>
+        <span className="text-gray-600">{formatDate(post.date)}</span>
       </div>
       <div className="flex flex-wrap gap-2 mb-8">
         {post.tags.map((tag) => (

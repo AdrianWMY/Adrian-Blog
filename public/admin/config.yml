@@ -2,7 +2,7 @@ backend:
   name: github
   repo: AdrianWMY/Adrian-Blog
   branch: main
-  client_id: Ov23liOwP63dRp1ahGfQ
+  client_id: ${GITHUB_CLIENT_ID}
   auth_scope: repo
 
 
@@ -16,7 +16,8 @@ collections:
     label: "Blog Posts"
     folder: "content/blog"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    # slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
       - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
       - { label: "Title", name: "title", widget: "string" }

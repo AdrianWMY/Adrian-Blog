@@ -1,6 +1,7 @@
 import React from 'react';
 import Tag from '@/components/Tag';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface BlogPostCardProps {
   slug: string;
@@ -11,6 +12,15 @@ interface BlogPostCardProps {
   date: string;
   thumbnail?: string;
 }
+
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 
 const BlogPostCard = ({
   slug,
@@ -26,7 +36,9 @@ const BlogPostCard = ({
       <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
         {/* {thumbnail && (
           <div className="mb-4">
-            <img
+            <Image
+              width={100}
+              height={100}
               src={thumbnail}
               alt={title}
               className="w-full h-48 object-cover rounded-lg"
@@ -42,7 +54,7 @@ const BlogPostCard = ({
         <p className="text-gray-600 mb-4">{description}</p>
         <div className="flex justify-between items-center text-sm text-gray-500">
           <span>{author}</span>
-          <span>{date}</span>
+          <span>{formatDate(date)}</span>
         </div>
       </div>
     </Link>
