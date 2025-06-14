@@ -81,7 +81,7 @@ const BlogPost = () => {
       >
         ← Back to blog
       </Link>
-      {post.thumbnail && (
+      {/* {post.thumbnail && (
         <div className="mb-8">
           <img
             src={post.thumbnail}
@@ -89,7 +89,7 @@ const BlogPost = () => {
             className="w-full h-64 object-cover rounded-lg"
           />
         </div>
-      )}
+      )} */}
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
       <div className="flex items-center gap-4 mb-8">
         <span className="text-gray-600">{post.author}</span>
