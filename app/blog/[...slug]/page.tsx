@@ -8,6 +8,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import { Components } from 'react-markdown';
+import Image from 'next/image';
 
 interface BlogPost {
   slug: string;
@@ -168,10 +169,13 @@ const BlogPost = () => {
       </Link>
       {post.thumbnail && (
         <div className="mb-8">
-          <img
+          <Image
             src={post.thumbnail}
             alt={post.title}
+            width={1200}
+            height={400}
             className="w-full h-64 object-cover rounded-lg"
+            priority
           />
         </div>
       )}
