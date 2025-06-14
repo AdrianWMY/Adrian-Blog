@@ -1,7 +1,7 @@
 import React from 'react';
 import Tag from '@/components/Tag';
 import Link from 'next/link';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 interface BlogPostCardProps {
   slug: string;
@@ -29,8 +29,8 @@ const BlogPostCard = ({
   description,
   author,
   date,
-  thumbnail,
-}: BlogPostCardProps) => {
+}: // thumbnail,
+BlogPostCardProps) => {
   return (
     <Link href={`/blog/${slug}`}>
       <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
