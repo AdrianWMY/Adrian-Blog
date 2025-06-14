@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Tag from '@/components/Tag';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
 
 interface BlogPost {
   slug: string;
@@ -42,7 +44,6 @@ const BlogPost = () => {
         setLoading(false);
       }
     };
-
     fetchPost();
   }, [params.slug]);
 
@@ -81,7 +82,7 @@ const BlogPost = () => {
       >
         ← Back to blog
       </Link>
-      {/* {post.thumbnail && (
+      {post.thumbnail && (
         <div className="mb-8">
           <img
             src={post.thumbnail}
@@ -89,7 +90,7 @@ const BlogPost = () => {
             className="w-full h-64 object-cover rounded-lg"
           />
         </div>
-      )} */}
+      )}
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
       <div className="flex items-center gap-4 mb-8">
         <span className="text-gray-600">{post.author}</span>
@@ -101,8 +102,10 @@ const BlogPost = () => {
           <Tag key={tag} name={tag} />
         ))}
       </div>
-      <div className="prose prose-lg max-w-none">
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+      <div className="prose prose-lg max-w-none prose-pre:bg-zinc-900 prose-pre:text-white prose-pre:rounded-lg prose-pre:p-4">
+        <ReactMarkdown rehypePlugins={[rehypeRaw, rehypeHighlight]}>
+          {post.content}
+        </ReactMarkdown>
       </div>
     </div>
   );
