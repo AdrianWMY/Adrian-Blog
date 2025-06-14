@@ -1,37 +1,35 @@
-import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { NextRequest } from 'next/server';
 import path from 'path';
+import fs from 'fs';
 import matter from 'gray-matter';
 
 export async function GET(
-  request: Request,
-  { params }: { params: { slug: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
-    const filePath = path.join(process.cwd(), 'content/blog', `${slug}.md`);
+    const filePath = path.join(process.cwd(), 'content/blog', `${(await params).slug}.md`);
 
     if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+      return Response.json(
+        { error: 'Post not found' },
+        { status: 404 }
+      );
     }
 
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
 
-    const post = {
-      slug,
-      title: data.title,
-      tags: data.tags || [],
-      description: data.description,
-      author: data.author,
-      date: data.date,
-      thumbnail: data.thumbnail,
+    return Response.json({
+      slug: (await params).slug,
       content,
-    };
-
-    return NextResponse.json(post);
+      ...data,
+    });
   } catch (error) {
-    console.error('Error fetching blog post:', error);
-    return NextResponse.json({ error: 'Failed to fetch blog post' }, { status: 500 });
+    console.error('Error reading blog post:', error);
+    return Response.json(
+      { error: 'Error reading blog post' },
+      { status: 500 }
+    );
   }
 } 
